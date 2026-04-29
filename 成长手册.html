@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>幼儿园成长手册</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --cream:#FAF6F0;
+  --paper:#F5EFE6;
+  --tan:#E8DDD0;
+  --brown:#8B6F5E;
+  --darkbrown:#5C4033;
+  --green:#7B9E78;
+  --accent:#D4956A;
+  --text:#3D2B1F;
+}
+
+body{
+  background:var(--cream);
+  font-family:'Ma Shan Zheng','PingFang SC','Hiragino Sans GB',sans-serif;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+.app{
+  width:100%;
+  max-width:420px;
+  min-height:100vh;
+  background:var(--paper);
+  position:relative;
+  overflow:hidden;
+}
+
+.page{display:none;flex-direction:column;min-height:100vh;}
+.page.active{display:flex;}
+
+/* 顶部导航 */
+.topbar{
+  background:var(--green);
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+.topbar-back{
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+  width:28px;
+  line-height:1;
+  font-family:sans-serif;
+}
+.topbar-title{
+  color:#fff;
+  font-size:17px;
+  flex:1;
+  text-align:center;
+  letter-spacing:2px;
+}
+.topbar-ph{width:28px;}
+
+/* 首页 */
+.home-hero{
+  padding:32px 24px 20px;
+  text-align:center;
+  background:var(--paper);
+  border-bottom:2px dashed var(--tan);
+}
+
+.home-hero h1{
+  font-size:26px;
+  color:var(--darkbrown);
+  letter-spacing:3px;
+  margin-bottom:8px;
+}
+
+.home-hero p{
+  font-size:14px;
+  color:var(--brown);
+  letter-spacing:1px;
+}
+
+.sop-wrap{
+  margin:20px 20px 0;
+  background:#fff;
+  border-radius:12px;
+  border:1.5px solid var(--tan);
+  padding:14px 16px;
+}
+
+.sop-title{
+  font-size:12px;
+  color:var(--brown);
+  margin-bottom:10px;
+  letter-spacing:1px;
+}
+
+.sop-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.sop-step{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+.sop-icon{
+  width:36px;
+  height:36px;
+  background:var(--cream);
+  border-radius:50%;
+  border:1.5px solid var(--tan);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+}
+
+.sop-label{
+  font-size:11px;
+  color:var(--brown);
+  letter-spacing:0.5px;
+}
+
+.sop-arr{
+  font-size:14px;
+  color:var(--tan);
+  margin-bottom:16px;
+}
+
+.case-wrap{
+  margin:16px 20px;
+  background:#fff;
+  border-radius:12px;
+  border:1.5px solid var(--tan);
+  padding:20px;
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:160px;
+}
+
+.case-wrap p{
+  font-size:13px;
+  color:var(--tan);
+  line-height:2;
+  letter-spacing:1px;
+}
+
+.home-btn-wrap{padding:0 20px 32px;}
+
+/* 按钮 */
+.btn-main{
+  width:100%;
+  background:var(--green);
+  color:#fff;
+  border:none;
+  border-radius:24px;
+  padding:14px;
+  font-size:16px;
+  font-family:'Ma Shan Zheng','PingFang SC',sans-serif;
+  letter-spacing:3px;
+  cursor:pointer;
+  transition:opacity 0.2s;
+}
+.btn-main:active{opacity:0.8;}
+
+.btn-ghost{
+  width:100%;
+  background:transparent;
+  color:var(--brown);
+  border:1.5px solid var(--tan);
+  border-radius:24px;
+  padding:12px;
+  font-size:15px;
+  font-family:'Ma Shan Zheng','PingFang SC',sans-serif;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.btn-ghost:active{background:var(--tan);}
+
+/* 制作页 */
+.make-body{
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  flex:1;
+}
+
+.field-block{}
+
+.field-label{
+  font-size:15px;
+  color:var(--darkbrown);
+  letter-spacing:2px;
+  margin-bottom:4px;
+}
+
+.field-sub{
+  font-size:12px;
+  color:var(--brown);
+  letter-spacing:0.5px;
+  margin-bottom:10px;
+}
+
+.upload-zone{
+  background:#fff;
+  border:2px dashed var(--green);
+  border-radius:12px;
+  padding:24px;
+  text-align:center;
+  cursor:pointer;
+  transition:background 0.2s;
+}
+.upload-zone:hover{background:var(--cream);}
+.upload-plus{font-size:32px;color:var(--green);line-height:1;margin-bottom:6px;}
+.upload-hint{font-size:12px;color:var(--green);letter-spacing:1px;}
+
+.photo-row{display:flex;gap:8px;}
+.thumb{
+  flex:1;
+  height:80px;
+  background:var(--tan);
+  border-radius:8px;
+  position:relative;
+  overflow:hidden;
+  border:1.5px solid var(--tan);
+}
+.thumb img{width:100%;height:100%;object-fit:cover;}
+.thumb-del{
+  position:absolute;
+  top:3px;right:3px;
+  width:16px;height:16px;
+  background:rgba(92,64,51,0.8);
+  border-radius:50%;
+  color:#fff;
+  font-size:10px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  font-family:sans-serif;
+}
+.thumb-add{
+  flex:1;height:80px;
+  border-radius:8px;
+  border:2px dashed var(--tan);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;color:var(--tan);
+  cursor:pointer;
+}
+
+.ta-wrap{
+  background:#fff;
+  border:1.5px solid var(--tan);
+  border-radius:12px;
+  padding:12px 14px;
+}
+textarea{
+  width:100%;border:none;outline:none;
+  font-size:14px;color:var(--text);
+  resize:none;background:transparent;
+  font-family:'Ma Shan Zheng','PingFang SC',sans-serif;
+  line-height:1.8;
+  letter-spacing:0.5px;
+}
+textarea::placeholder{color:var(--tan);}
+
+/* 结果页 */
+.result-body{
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  flex:1;
+}
+
+.result-label{
+  font-size:15px;
+  color:var(--darkbrown);
+  letter-spacing:2px;
+}
+
+.canvas-wrap{
+  background:#fff;
+  border-radius:12px;
+  border:1.5px solid var(--tan);
+  overflow:hidden;
+  flex:1;
+  position:relative;
+}
+
+canvas{
+  width:100%;
+  display:block;
+}
+
+.result-hint{
+  font-size:11px;
+  color:var(--brown);
+  text-align:center;
+  letter-spacing:1px;
+}
+
+.btn-row{display:flex;gap:10px;}
+.btn-row .btn-main{flex:1.5;}
+.btn-row .btn-ghost{flex:1;}
+
+/* 隐藏input */
+#file-input{display:none;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- 首页 -->
+  <div class="page active" id="p0">
+    <div class="topbar">
+      <div class="topbar-ph"></div>
+      <div class="topbar-title">幼儿园成长手册</div>
+      <div class="topbar-ph"></div>
+    </div>
+    <div class="home-hero">
+      <h1>宝贝的成长手册</h1>
+      <p>上传照片 · 一键生成 · 打印即用</p>
+    </div>
+    <div class="sop-wrap">
+      <div class="sop-title">制作流程</div>
+      <div class="sop-row">
+        <div class="sop-step">
+          <div class="sop-icon">📷</div>
+          <div class="sop-label">上传照片</div>
+        </div>
+        <div class="sop-arr">→</div>
+        <div class="sop-step">
+          <div class="sop-icon">✏️</div>
+          <div class="sop-label">填写文字</div>
+        </div>
+        <div class="sop-arr">→</div>
+        <div class="sop-step">
+          <div class="sop-icon">✨</div>
+          <div class="sop-label">生成</div>
+        </div>
+        <div class="sop-arr">→</div>
+        <div class="sop-step">
+          <div class="sop-icon">⬇️</div>
+          <div class="sop-label">下载</div>
+        </div>
+      </div>
+    </div>
+    <div class="case-wrap">
+      <p>成品案例展示区<br>上线后替换为真实截图</p>
+    </div>
+    <div class="home-btn-wrap">
+      <button class="btn-main" onclick="go(1)">立即制作</button>
+    </div>
+  </div>
+
+  <!-- 制作页 -->
+  <div class="page" id="p1">
+    <div class="topbar">
+      <div class="topbar-back" onclick="go(0)">‹</div>
+      <div class="topbar-title">制作手册</div>
+      <div class="topbar-ph"></div>
+    </div>
+    <div class="make-body">
+      <div class="field-block">
+        <div class="field-label">上传宝贝照片</div>
+        <div class="field-sub">1-3张，照片越清晰效果越好</div>
+        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+          <div class="upload-plus">+</div>
+          <div class="upload-hint">点击选择照片</div>
+        </div>
+        <div class="photo-row" id="photo-row" style="display:none;"></div>
+      </div>
+      <div class="field-block">
+        <div class="field-label">添加文字内容</div>
+        <div class="field-sub">可选，不填则留空白区域可手写</div>
+        <div class="ta-wrap">
+          <textarea id="txt" rows="5" placeholder="例如：&#10;地点：公园里&#10;事件：今天和爸爸妈妈来放风筝，玩得超开心～"></textarea>
+        </div>
+      </div>
+      <button class="btn-main" onclick="generate()">生成手册</button>
+    </div>
+  </div>
+
+  <!-- 结果页 -->
+  <div class="page" id="p2">
+    <div class="topbar">
+      <div class="topbar-ph"></div>
+      <div class="topbar-title">预览效果</div>
+      <div class="topbar-ph"></div>
+    </div>
+    <div class="result-body">
+      <div class="result-label">生成完成</div>
+      <div class="canvas-wrap">
+        <canvas id="mycanvas"></canvas>
+      </div>
+      <div class="result-hint">A4尺寸 · 300DPI · 可直接打印</div>
+      <div class="btn-row">
+        <button class="btn-main" onclick="downloadPNG()">下载高清版（免费）</button>
+        <button class="btn-ghost" onclick="goEdit()">重新编辑</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<input type="file" id="file-input" accept="image/*" multiple onchange="handleFiles(this.files)">
+
+<script>
+var photos = [];
+var photoDataURLs = [];
+
+function go(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('p' + n).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function handleFiles(files) {
+  var remaining = 3 - photos.length;
+  var toAdd = Math.min(files.length, remaining);
+  var loaded = 0;
+  for (var i = 0; i < toAdd; i++) {
+    (function(file) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        photos.push(file);
+        photoDataURLs.push(e.target.result);
+        loaded++;
+        if (loaded === toAdd) renderPhotoRow();
+      };
+      reader.readAsDataURL(file);
+    })(files[i]);
+  }
+}
+
+function renderPhotoRow() {
+  var zone = document.getElementById('upload-zone');
+  var row = document.getElementById('photo-row');
+  if (photos.length > 0) {
+    zone.style.display = 'none';
+    row.style.display = 'flex';
+  } else {
+    zone.style.display = 'block';
+    row.style.display = 'none';
+  }
+  row.innerHTML = '';
+  photoDataURLs.forEach(function(url, i) {
+    row.innerHTML += '<div class="thumb"><img src="' + url + '"><div class="thumb-del" onclick="removePhoto(' + i + ')">×</div></div>';
+  });
+  if (photos.length < 3) {
+    row.innerHTML += '<div class="thumb-add" onclick="document.getElementById(\'file-input\').click()">+</div>';
+  }
+}
+
+function removePhoto(i) {
+  photos.splice(i, 1);
+  photoDataURLs.splice(i, 1);
+  renderPhotoRow();
+}
+
+function generate() {
+  if (photos.length === 0) {
+    alert('请先上传至少一张照片');
+    return;
+  }
+  go(2);
+  setTimeout(drawCanvas, 100);
+}
+
+function drawCanvas() {
+  var canvas = document.getElementById('mycanvas');
+  // A4 300DPI: 2480x3508
+  var W = 2480, H = 3508;
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+
+  // 背景：米色手账风
+  ctx.fillStyle = '#FAF6F0';
+  ctx.fillRect(0, 0, W, H);
+
+  // 纸张纹理（细线）
+  ctx.strokeStyle = 'rgba(180,160,140,0.12)';
+  ctx.lineWidth = 2;
+  for (var y = 80; y < H; y += 80) {
+    ctx.beginPath();
+    ctx.moveTo(60, y);
+    ctx.lineTo(W - 60, y);
+    ctx.stroke();
+  }
+
+  // 外边框
+  ctx.strokeStyle = '#C8B8A8';
+  ctx.lineWidth = 6;
+  ctx.strokeRect(40, 40, W - 80, H - 80);
+
+  // 内边框（虚线）
+  ctx.strokeStyle = '#D4C4B4';
+  ctx.lineWidth = 3;
+  ctx.setLineDash([20, 12]);
+  ctx.strokeRect(70, 70, W - 140, H - 140);
+  ctx.setLineDash([]);
+
+  // 标题区
+  ctx.fillStyle = '#5C4033';
+  ctx.font = 'bold 120px serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('我的成长手册', W / 2, 260);
+
+  // 标题下装饰线
+  ctx.strokeStyle = '#8B6F5E';
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.moveTo(W / 2 - 400, 290);
+  ctx.lineTo(W / 2 + 400, 290);
+  ctx.stroke();
+
+  // 照片区
+  var txt = document.getElementById('txt').value.trim();
+  var photoCount = photoDataURLs.length;
+  var photoAreaTop = 340;
+  var photoAreaH = txt ? H * 0.52 : H * 0.72;
+  var photoAreaBottom = photoAreaTop + photoAreaH;
+  var pad = 60;
+
+  var loaded = 0;
+  var imgs = [];
+
+  photoDataURLs.forEach(function(url, i) {
+    var img = new Image();
+    img.onload = function() {
+      imgs[i] = img;
+      loaded++;
+      if (loaded === photoCount) drawPhotos();
+    };
+    img.src = url;
+  });
+
+  function drawPhotos() {
+    var gap = 40;
+    if (photoCount === 1) {
+      drawPhoto(ctx, imgs[0], pad + 40, photoAreaTop + 20, W - pad * 2 - 80, photoAreaH - 40);
+    } else if (photoCount === 2) {
+      var pw = (W - pad * 2 - gap * 3) / 2;
+      drawPhoto(ctx, imgs[0], pad + gap, photoAreaTop + 20, pw, photoAreaH - 40);
+      drawPhoto(ctx, imgs[1], pad + gap * 2 + pw, photoAreaTop + 20, pw, photoAreaH - 40);
+    } else {
+      var pw3 = (W - pad * 2 - gap * 4) / 3;
+      for (var i = 0; i < 3; i++) {
+        drawPhoto(ctx, imgs[i], pad + gap * (i + 1) + pw3 * i, photoAreaTop + 20, pw3, photoAreaH - 40);
+      }
+    }
+    drawTextArea();
+  }
+
+  function drawPhoto(ctx, img, x, y, w, h) {
+    // 白色边框（拍立得效果）
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(x - 12, y - 12, w + 24, h + 40);
+    ctx.strokeStyle = '#D4C4B4';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x - 12, y - 12, w + 24, h + 40);
+
+    // 裁剪照片
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x, y, w, h);
+    ctx.clip();
+    var scale = Math.max(w / img.width, h / img.height);
+    var sw = img.width * scale;
+    var sh = img.height * scale;
+    ctx.drawImage(img, x + (w - sw) / 2, y + (h - sh) / 2, sw, sh);
+    ctx.restore();
+  }
+
+  function drawTextArea() {
+    var textTop = photoAreaBottom + 60;
+    var textH = H - textTop - 120;
+
+    // 文字区背景
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.beginPath();
+    roundRect(ctx, pad + 40, textTop, W - pad * 2 - 80, textH, 20);
+    ctx.fill();
+    ctx.strokeStyle = '#D4C4B4';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    if (txt) {
+      // 用户输入的文字
+      ctx.fillStyle = '#3D2B1F';
+      ctx.font = '72px serif';
+      ctx.textAlign = 'left';
+      var lines = txt.split('\n');
+      var lineH = 100;
+      var startY = textTop + 90;
+      var maxW = W - pad * 2 - 160;
+      lines.forEach(function(line, i) {
+        wrapText(ctx, line, pad + 80, startY + i * lineH, maxW, lineH);
+      });
+    } else {
+      // 空白留线
+      ctx.strokeStyle = 'rgba(180,160,140,0.4)';
+      ctx.lineWidth = 3;
+      var lineStart = textTop + 80;
+      var lineGap = 110;
+      for (var l = 0; l < 6; l++) {
+        ctx.beginPath();
+        ctx.moveTo(pad + 80, lineStart + l * lineGap);
+        ctx.lineTo(W - pad - 80, lineStart + l * lineGap);
+        ctx.stroke();
+      }
+      ctx.fillStyle = 'rgba(180,160,140,0.5)';
+      ctx.font = '60px serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('写下你想说的话吧～', W / 2, textTop + textH / 2 + 20);
+    }
+
+    // 底部签名区
+    ctx.fillStyle = '#8B6F5E';
+    ctx.font = '52px serif';
+    ctx.textAlign = 'center';
+    var d = new Date();
+    ctx.fillText(d.getFullYear() + ' · ' + (d.getMonth() + 1) + ' · ' + d.getDate(), W / 2, H - 100);
+  }
+}
+
+function wrapText(ctx, text, x, y, maxW, lineH) {
+  if (!text) return;
+  var chars = text.split('');
+  var line = '';
+  var currentY = y;
+  for (var i = 0; i < chars.length; i++) {
+    var testLine = line + chars[i];
+    if (ctx.measureText(testLine).width > maxW && line) {
+      ctx.fillText(line, x, currentY);
+      line = chars[i];
+      currentY += lineH;
+    } else {
+      line = testLine;
+    }
+  }
+  if (line) ctx.fillText(line, x, currentY);
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function downloadPNG() {
+  var canvas = document.getElementById('mycanvas');
+  var link = document.createElement('a');
+  link.download = '宝贝成长手册.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function goEdit() {
+  go(1);
+}
+</script>
+</body>
+</html>
